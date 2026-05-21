@@ -1,0 +1,61 @@
+<main class="container">
+      <header>
+        <h1>Planning hebdomadaire</h1>
+        <p>Objectif: 37h sur la semaine</p>
+      </header>
+
+      <section class="weekly-card">
+        <p class="hours">Temps total: <strong>{{ formatDuration(weeklyWorkedMinutes) }}</strong></p>
+        <p [class.over]="weeklyDeltaMinutes > 0" [class.under]="weeklyDeltaMinutes < 0">
+          Ecart: {{ weeklyDeltaLabel }}
+        </p>
+      </section>
+
+      <section class="day-list">
+        <article class="day-card" *ngFor="let day of days">
+          <h2>{{ day.label }}</h2>
+
+          <div class="time-row">
+            <label [for]="day.key + '-arrival'">Arrivee</label>
+            <input
+              [id]="day.key + '-arrival'"
+              type="time"
+              step="300"
+                  [min]="formatBound(day.arrivalMin)"
+                  [max]="formatBound(day.arrivalMax)"
+              [(ngModel)]="schedule[day.key].arrival"
+              (ngModelChange)="onTimeChange(day, 'arrival')"
+            />
+          </div>
+
+          <div class="meal">Repas: {{ lunchStart }} - {{ lunchEnd }}</div>
+
+          <div class="time-row">
+            <label [for]="day.key + '-departure'">Depart</label>
+            <input
+              [id]="day.key + '-departure'"
+              type="time"
+              step="300"
+                  [min]="formatBound(day.departureMin)"
+                  [max]="formatBound(day.departureMax)"
+              [(ngModel)]="schedule[day.key].departure"
+              (ngModelChange)="onTimeChange(day, 'departure')"
+            />
+          </div>
+
+          <p class="day-total">Total jour: {{ formatDuration(getDayWorkedMinutes(day)) }}</p>
+        </article>
+      </section>
+
+      <section class="export-card">
+        <button type="button" (click)="generatePlanningText()">Generer le planning texte</button>
+        <textarea
+          rows="7"
+          readonly
+          [value]="planningText"
+          placeholder="Le texte du planning apparaitra ici..."
+        ></textarea>
+        <button type="button" class="secondary" (click)="copyPlanningText()">Copier</button>
+        <p class="copy-message" *ngIf="copyMessage">{{ copyMessage }}</p>
+      </section>
+</main>

@@ -1,0 +1,128 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f2f5f9;
+  color: #1f2937;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+}
+
+header p {
+  margin-top: 0.25rem;
+  color: #4b5563;
+}
+
+.weekly-card,
+.day-card,
+.export-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(31, 41, 55, 0.08);
+}
+
+.weekly-card {
+  margin: 1rem 0;
+}
+
+.hours {
+  margin: 0 0 0.25rem;
+}
+
+.over {
+  color: #047857;
+  font-weight: 700;
+}
+
+.under {
+  color: #b45309;
+  font-weight: 700;
+}
+
+.day-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.time-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+label {
+  font-weight: 600;
+}
+
+input[type='time'] {
+  font-size: 1rem;
+  padding: 0.4rem;
+}
+
+.meal {
+  margin-bottom: 0.75rem;
+  color: #4b5563;
+}
+
+.day-total {
+  margin: 0;
+  font-weight: 700;
+}
+
+.export-card {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  background: #1d4ed8;
+  color: #ffffff;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+button.secondary {
+  background: #374151;
+}
+
+textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 0.7rem;
+  font-family: Consolas, monospace;
+  box-sizing: border-box;
+}
+
+.copy-message {
+  margin: 0;
+  color: #2563eb;
+}
+
+@media (min-width: 700px) {
+  .day-list {
+	grid-template-columns: 1fr 1fr;
+  }
+}
+

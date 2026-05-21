@@ -1,0 +1,31 @@
+# Planning de Semaine
+
+Application Angular mobile-first pour saisir un planning hebdomadaire de travail.
+
+## Fonctions
+
+- Saisie des horaires avec `input type="time"` (rouleau natif sur smartphone selon le navigateur)
+- Pas de 5 minutes (`step=300`)
+- Regles horaires:
+  - Lundi a jeudi: arrivee 08:00-09:30, depart 16:30-17:30
+  - Vendredi: arrivee 08:00-09:30, depart 15:30-16:00
+  - Pause repas fixe: 12:00-13:00
+- Calcul automatique du total hebdomadaire
+- Affichage de l'ecart par rapport a 37h (en plus / en moins)
+- Export texte du planning (une ligne par jour) + copie presse-papiers
+
+## Lancer en local
+
+```powershell
+npm install
+npm start
+```
+
+Puis ouvrir `http://localhost:4200/`.
+
+## Verification rapide
+
+```powershell
+npm run build
+npm test -- --watch=false --browsers=ChromeHeadless
+```
