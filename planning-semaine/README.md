@@ -29,3 +29,23 @@ Puis ouvrir `http://localhost:4200/`.
 npm run build
 npm test -- --watch=false --browsers=ChromeHeadless
 ```
+
+## Build pour GitHub Pages
+
+L'URL cible est : `https://fredoune77.github.io/planning`
+
+Le build GitHub Pages :
+
+- genere les fichiers statiques dans `D:\outilsdev\wks\untitled\docs`
+- positionne le `base href` sur `/planning/`
+- cree `404.html` pour les routes SPA
+- cree `.nojekyll`
+
+Commande :
+
+```powershell
+npm run build:github-pages
+```
+
+Ensuite, il suffit de publier le contenu du dossier `docs` dans le depot GitHub Pages configure pour le projet `planning`.
+
