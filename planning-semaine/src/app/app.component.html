@@ -30,14 +30,25 @@
 
           <div class="meal">Repas: {{ lunchStart }} - {{ lunchEnd }}</div>
 
+              <label class="sport-toggle" [for]="day.key + '-sport'">
+                <input
+                  [id]="day.key + '-sport'"
+                  type="checkbox"
+                  [(ngModel)]="schedule[day.key].sport"
+                  (ngModelChange)="onSportToggle(day)"
+                />
+                <span>Sport (depart a 17:00)</span>
+              </label>
+
           <div class="time-row">
             <label [for]="day.key + '-departure'">Depart</label>
             <input
               [id]="day.key + '-departure'"
               type="time"
               step="300"
-                  [min]="formatBound(day.departureMin)"
-                  [max]="formatBound(day.departureMax)"
+                  [min]="schedule[day.key].sport ? '17:00' : formatBound(day.departureMin)"
+                  [max]="schedule[day.key].sport ? '17:00' : formatBound(day.departureMax)"
+                  [disabled]="schedule[day.key].sport"
               [(ngModel)]="schedule[day.key].departure"
               (ngModelChange)="onTimeChange(day, 'departure')"
             />

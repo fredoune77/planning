@@ -25,4 +25,26 @@ describe('AppComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.hours')?.textContent).toContain('37h00');
   });
+
+  it('should force departure to 17:00 when sport is checked', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance as any;
+    const lundi = app.days[0];
+
+    app.schedule.lundi.sport = true;
+    app.onSportToggle(lundi);
+
+    expect(app.schedule.lundi.departure).toBe('17:00');
+  });
+
+  it('should update the weekly total when sport is checked on friday', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance as any;
+    const vendredi = app.days.find((day: any) => day.key === 'vendredi');
+
+    app.schedule.vendredi.sport = true;
+    app.onSportToggle(vendredi);
+
+    expect(app.formatDuration(app.weeklyWorkedMinutes)).toBe('38h00');
+  });
 });

@@ -18,6 +18,7 @@ interface WorkDay {
 interface DaySchedule {
   arrival: string;
   departure: string;
+  sport: boolean;
 }
 
 @Component({
@@ -86,17 +87,25 @@ export class AppComponent {
   ];
 
   protected readonly schedule: Record<DayKey, DaySchedule> = {
-    lundi: { arrival: '08:40', departure: '17:20' },
-    mardi: { arrival: '08:40', departure: '17:20' },
-    mercredi: { arrival: '08:40', departure: '17:20' },
-    jeudi: { arrival: '08:40', departure: '17:20' },
-    vendredi: { arrival: '08:40', departure: '16:00' }
+    lundi: { arrival: '08:40', departure: '17:20', sport: false },
+    mardi: { arrival: '08:40', departure: '17:20', sport: false },
+    mercredi: { arrival: '08:40', departure: '17:20', sport: false },
+    jeudi: { arrival: '08:40', departure: '17:20', sport: false },
+    vendredi: { arrival: '08:40', departure: '16:00', sport: false }
   };
 
   protected planningText = '';
   protected copyMessage = '';
 
-  protected onTimeChange(day: WorkDay, field: keyof DaySchedule): void {
+  protected onTimeChange(day: WorkDay, field: 'arrival' | 'departure'): void {
+    if (field === 'departure' && this.schedule[day.key].sport) {
+      this.schedule[day.key].departure = '17:00';
+      if (this.planningText) {
+        this.generatePlanningText();
+      }
+      return;
+    }
+
     const configMin = field === 'arrival' ? day.arrivalMin : day.departureMin;
     const configMax = field === 'arrival' ? day.arrivalMax : day.departureMax;
     const value = this.schedule[day.key][field];
@@ -113,6 +122,28 @@ export class AppComponent {
         const adjustedArrival = this.clamp(departure - 60, day.arrivalMin, day.arrivalMax);
         this.schedule[day.key].arrival = this.toTime(adjustedArrival);
       }
+    }
+
+    if (this.planningText) {
+      this.generatePlanningText();
+    }
+  }
+
+  protected onSportToggle(day: WorkDay): void {
+    const item = this.schedule[day.key];
+
+    if (item.sport) {
+      item.departure = '17:00';
+    } else {
+      item.departure = this.normalizeTime(day.defaultDeparture, day.departureMin, day.departureMax);
+    }
+
+    const arrival = this.toMinutes(item.arrival);
+    const departure = this.toMinutes(item.departure);
+
+    if (arrival >= departure) {
+      const maxArrival = item.sport ? this.toMinutes('16:00') : day.arrivalMax;
+      item.arrival = this.toTime(this.clamp(departure - 60, day.arrivalMin, maxArrival));
     }
 
     if (this.planningText) {
@@ -162,7 +193,8 @@ export class AppComponent {
     this.planningText = this.days
       .map((day) => {
         const item = this.schedule[day.key];
-        return `${day.label}: ${item.arrival} - ${this.lunchStart} / ${this.lunchEnd} - ${item.departure} (${this.formatDuration(this.getDayWorkedMinutes(day))})`;
+        const sportLabel = item.sport ? ' - sport' : '';
+        return `${day.label}: ${item.arrival} - ${this.lunchStart} / ${this.lunchEnd} - ${item.departure} (${this.formatDuration(this.getDayWorkedMinutes(day))}${sportLabel})`;
       })
       .join('\n');
     this.copyMessage = '';

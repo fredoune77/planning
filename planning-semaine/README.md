@@ -47,5 +47,7 @@ Commande :
 npm run build:github-pages
 ```
 
+Set-Location "D:\outilsdev\wks\untitled\planning-semaine"
+npm run build:github-pages
 Ensuite, il suffit de publier le contenu du dossier `docs` dans le depot GitHub Pages configure pour le projet `planning`.
 
