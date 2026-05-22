@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 type DayKey = 'lundi' | 'mardi' | 'mercredi' | 'jeudi' | 'vendredi';
 
@@ -43,7 +43,7 @@ export class AppComponent {
       arrivalMax: this.toMinutes('09:30'),
       departureMin: this.toMinutes('16:30'),
       departureMax: this.toMinutes('17:30'),
-      defaultArrival: '08:40',
+      defaultArrival: '08:30',
       defaultDeparture: '17:20'
     },
     {
@@ -89,11 +89,11 @@ export class AppComponent {
   ];
 
   protected readonly schedule: Record<DayKey, DaySchedule> = {
-    lundi: { arrival: '08:40', departure: '17:20', sport: false, holiday: false },
-    mardi: { arrival: '08:40', departure: '17:20', sport: false, holiday: false },
-    mercredi: { arrival: '08:40', departure: '17:20', sport: false, holiday: false },
-    jeudi: { arrival: '08:40', departure: '17:20', sport: false, holiday: false },
-    vendredi: { arrival: '08:40', departure: '16:00', sport: false, holiday: false }
+    lundi: {arrival: '08:40', departure: '17:20', sport: false, holiday: false},
+    mardi: {arrival: '08:40', departure: '17:20', sport: false, holiday: false},
+    mercredi: {arrival: '08:40', departure: '17:20', sport: false, holiday: false},
+    jeudi: {arrival: '08:40', departure: '17:20', sport: false, holiday: false},
+    vendredi: {arrival: '08:40', departure: '16:00', sport: false, holiday: false}
   };
 
   protected planningText = '';
