@@ -53,7 +53,7 @@ export class AppComponent {
       arrivalMax: this.toMinutes('09:30'),
       departureMin: this.toMinutes('16:30'),
       departureMax: this.toMinutes('17:30'),
-      defaultArrival: '08:40',
+      defaultArrival: '08:30',
       defaultDeparture: '17:20'
     },
     {
@@ -63,7 +63,7 @@ export class AppComponent {
       arrivalMax: this.toMinutes('09:30'),
       departureMin: this.toMinutes('16:30'),
       departureMax: this.toMinutes('17:30'),
-      defaultArrival: '08:40',
+      defaultArrival: '08:30',
       defaultDeparture: '17:20'
     },
     {
@@ -73,7 +73,7 @@ export class AppComponent {
       arrivalMax: this.toMinutes('09:30'),
       departureMin: this.toMinutes('16:30'),
       departureMax: this.toMinutes('17:30'),
-      defaultArrival: '08:40',
+      defaultArrival: '08:30',
       defaultDeparture: '17:20'
     },
     {
@@ -83,7 +83,7 @@ export class AppComponent {
       arrivalMax: this.toMinutes('09:30'),
       departureMin: this.toMinutes('15:30'),
       departureMax: this.toMinutes('16:00'),
-      defaultArrival: '08:40',
+      defaultArrival: '08:30',
       defaultDeparture: '16:00'
     }
   ];
