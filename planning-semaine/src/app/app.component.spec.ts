@@ -23,7 +23,14 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.hours')?.textContent).toContain('37h00');
+    expect(compiled.querySelector('.hours')?.textContent).toContain('37h50');
+  });
+
+  it('should initialize monday arrival from defaultArrival', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance as any;
+
+    expect(app.schedule.lundi.arrival).toBe('08:30');
   });
 
   it('should force departure to 17:00 when sport is checked', () => {
@@ -45,7 +52,7 @@ describe('AppComponent', () => {
     app.schedule.vendredi.sport = true;
     app.onSportToggle(vendredi);
 
-    expect(app.formatDuration(app.weeklyWorkedMinutes)).toBe('38h00');
+    expect(app.formatDuration(app.weeklyWorkedMinutes)).toBe('38h50');
   });
 
   it('should count a holiday as 7h24', () => {
@@ -57,7 +64,7 @@ describe('AppComponent', () => {
     app.onHolidayToggle(lundi);
 
     expect(app.formatDuration(app.getDayWorkedMinutes(lundi))).toBe('7h24');
-    expect(app.formatDuration(app.weeklyWorkedMinutes)).toBe('36h44');
+    expect(app.formatDuration(app.weeklyWorkedMinutes)).toBe('37h24');
   });
 
   it('should disable arrival, departure and sport when holiday is checked', async () => {

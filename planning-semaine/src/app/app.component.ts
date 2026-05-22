@@ -88,13 +88,18 @@ export class AppComponent {
     }
   ];
 
-  protected readonly schedule: Record<DayKey, DaySchedule> = {
-    lundi: {arrival: '08:40', departure: '17:20', sport: false, holiday: false},
-    mardi: {arrival: '08:40', departure: '17:20', sport: false, holiday: false},
-    mercredi: {arrival: '08:40', departure: '17:20', sport: false, holiday: false},
-    jeudi: {arrival: '08:40', departure: '17:20', sport: false, holiday: false},
-    vendredi: {arrival: '08:40', departure: '16:00', sport: false, holiday: false}
-  };
+  protected readonly schedule: Record<DayKey, DaySchedule> = this.days.reduce(
+    (result, day) => {
+      result[day.key] = {
+        arrival: day.defaultArrival,
+        departure: day.defaultDeparture,
+        sport: false,
+        holiday: false
+      };
+      return result;
+    },
+    {} as Record<DayKey, DaySchedule>
+  );
 
   protected planningText = '';
   protected copyMessage = '';
