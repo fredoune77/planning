@@ -10,6 +10,8 @@ Application Angular mobile-first pour saisir un planning hebdomadaire de travail
   - Lundi a jeudi: arrivee 08:00-09:30, depart 16:30-17:30
   - Vendredi: arrivee 08:00-09:30, depart 15:30-16:00
   - Pause repas fixe: 12:00-13:00
+- Option `jour ferie` par jour : bloque la modification des heures et compte automatiquement `7h24`
+- L'option `jour ferie` desactive `sport` pour eviter les conflits de calcul
 - Calcul automatique du total hebdomadaire
 - Affichage de l'ecart par rapport a 37h (en plus / en moins)
 - Export texte du planning (une ligne par jour) + copie presse-papiers

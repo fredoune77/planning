@@ -22,6 +22,18 @@ h2 {
   font-size: 1.1rem;
 }
 
+.day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.day-header h2 {
+  margin: 0;
+}
+
 header p {
   margin-top: 0.25rem;
   color: #4b5563;
@@ -59,6 +71,25 @@ header p {
   gap: 0.75rem;
 }
 
+.holiday-day {
+  border: 2px solid #93c5fd;
+  background: #eff6ff;
+}
+
+.holiday-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: #1d4ed8;
+  color: #ffffff;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .time-row {
   display: flex;
   align-items: center;
@@ -81,6 +112,7 @@ input[type='time'] {
   color: #4b5563;
 }
 
+.holiday-toggle,
 .sport-toggle {
   display: flex;
   align-items: center;
@@ -89,6 +121,11 @@ input[type='time'] {
   color: #1f2937;
 }
 
+.holiday-toggle {
+  color: #1d4ed8;
+}
+
+.holiday-toggle input[type='checkbox'],
 .sport-toggle input[type='checkbox'] {
   width: 1.1rem;
   height: 1.1rem;
@@ -102,6 +139,11 @@ input[type='time']:disabled {
 .day-total {
   margin: 0;
   font-weight: 700;
+}
+
+.day-note {
+  font-weight: 600;
+  color: #1d4ed8;
 }
 
 .export-card {

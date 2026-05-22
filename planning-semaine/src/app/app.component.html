@@ -12,8 +12,11 @@
       </section>
 
       <section class="day-list">
-        <article class="day-card" *ngFor="let day of days">
-          <h2>{{ day.label }}</h2>
+        <article class="day-card" *ngFor="let day of days" [class.holiday-day]="schedule[day.key].holiday">
+          <div class="day-header">
+            <h2>{{ day.label }}</h2>
+            <span *ngIf="schedule[day.key].holiday" class="holiday-badge">Ferie</span>
+          </div>
 
           <div class="time-row">
             <label [for]="day.key + '-arrival'">Arrivee</label>
@@ -23,6 +26,7 @@
               step="300"
                   [min]="formatBound(day.arrivalMin)"
                   [max]="formatBound(day.arrivalMax)"
+              [disabled]="schedule[day.key].holiday"
               [(ngModel)]="schedule[day.key].arrival"
               (ngModelChange)="onTimeChange(day, 'arrival')"
             />
@@ -30,10 +34,21 @@
 
           <div class="meal">Repas: {{ lunchStart }} - {{ lunchEnd }}</div>
 
+              <label class="holiday-toggle" [for]="day.key + '-holiday'">
+                <input
+                  [id]="day.key + '-holiday'"
+                  type="checkbox"
+                  [(ngModel)]="schedule[day.key].holiday"
+                  (ngModelChange)="onHolidayToggle(day)"
+                />
+                <span>Jour ferie (7h24)</span>
+              </label>
+
               <label class="sport-toggle" [for]="day.key + '-sport'">
                 <input
                   [id]="day.key + '-sport'"
                   type="checkbox"
+                  [disabled]="schedule[day.key].holiday"
                   [(ngModel)]="schedule[day.key].sport"
                   (ngModelChange)="onSportToggle(day)"
                 />
@@ -48,13 +63,16 @@
               step="300"
                   [min]="schedule[day.key].sport ? '17:00' : formatBound(day.departureMin)"
                   [max]="schedule[day.key].sport ? '17:00' : formatBound(day.departureMax)"
-                  [disabled]="schedule[day.key].sport"
+                   [disabled]="schedule[day.key].sport || schedule[day.key].holiday"
               [(ngModel)]="schedule[day.key].departure"
               (ngModelChange)="onTimeChange(day, 'departure')"
             />
           </div>
 
-          <p class="day-total">Total jour: {{ formatDuration(getDayWorkedMinutes(day)) }}</p>
+          <p class="day-total">
+            Total jour: {{ formatDuration(getDayWorkedMinutes(day)) }}
+            <span *ngIf="schedule[day.key].holiday" class="day-note">(jour ferie)</span>
+          </p>
         </article>
       </section>
 

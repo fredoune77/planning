@@ -19,6 +19,7 @@ interface DaySchedule {
   arrival: string;
   departure: string;
   sport: boolean;
+  holiday: boolean;
 }
 
 @Component({
@@ -31,6 +32,7 @@ interface DaySchedule {
 export class AppComponent {
   protected readonly lunchStart = '12:00';
   protected readonly lunchEnd = '13:00';
+  protected readonly publicHolidayMinutes = 7 * 60 + 24;
   protected readonly weeklyTargetMinutes = 37 * 60;
 
   protected readonly days: WorkDay[] = [
@@ -87,17 +89,21 @@ export class AppComponent {
   ];
 
   protected readonly schedule: Record<DayKey, DaySchedule> = {
-    lundi: { arrival: '08:40', departure: '17:20', sport: false },
-    mardi: { arrival: '08:40', departure: '17:20', sport: false },
-    mercredi: { arrival: '08:40', departure: '17:20', sport: false },
-    jeudi: { arrival: '08:40', departure: '17:20', sport: false },
-    vendredi: { arrival: '08:40', departure: '16:00', sport: false }
+    lundi: { arrival: '08:40', departure: '17:20', sport: false, holiday: false },
+    mardi: { arrival: '08:40', departure: '17:20', sport: false, holiday: false },
+    mercredi: { arrival: '08:40', departure: '17:20', sport: false, holiday: false },
+    jeudi: { arrival: '08:40', departure: '17:20', sport: false, holiday: false },
+    vendredi: { arrival: '08:40', departure: '16:00', sport: false, holiday: false }
   };
 
   protected planningText = '';
   protected copyMessage = '';
 
   protected onTimeChange(day: WorkDay, field: 'arrival' | 'departure'): void {
+    if (this.schedule[day.key].holiday) {
+      return;
+    }
+
     if (field === 'departure' && this.schedule[day.key].sport) {
       this.schedule[day.key].departure = '17:00';
       if (this.planningText) {
@@ -132,6 +138,11 @@ export class AppComponent {
   protected onSportToggle(day: WorkDay): void {
     const item = this.schedule[day.key];
 
+    if (item.holiday) {
+      item.sport = false;
+      return;
+    }
+
     if (item.sport) {
       item.departure = '17:00';
     } else {
@@ -151,8 +162,26 @@ export class AppComponent {
     }
   }
 
+  protected onHolidayToggle(day: WorkDay): void {
+    const item = this.schedule[day.key];
+
+    if (item.holiday && item.sport) {
+      item.sport = false;
+      item.departure = this.normalizeTime(day.defaultDeparture, day.departureMin, day.departureMax);
+    }
+
+    if (this.planningText) {
+      this.generatePlanningText();
+    }
+  }
+
   protected getDayWorkedMinutes(day: WorkDay): number {
     const item = this.schedule[day.key];
+
+    if (item.holiday) {
+      return this.publicHolidayMinutes;
+    }
+
     const dayMinutes = this.toMinutes(item.departure) - this.toMinutes(item.arrival);
     const lunchMinutes = this.toMinutes(this.lunchEnd) - this.toMinutes(this.lunchStart);
     return Math.max(0, dayMinutes - lunchMinutes);
@@ -193,6 +222,11 @@ export class AppComponent {
     this.planningText = this.days
       .map((day) => {
         const item = this.schedule[day.key];
+
+        if (item.holiday) {
+          return `${day.label}: jour ferie (${this.formatDuration(this.publicHolidayMinutes)})`;
+        }
+
         const sportLabel = item.sport ? ' - sport' : '';
         return `${day.label}: ${item.arrival} - ${this.lunchStart} / ${this.lunchEnd} - ${item.departure} (${this.formatDuration(this.getDayWorkedMinutes(day))}${sportLabel})`;
       })
